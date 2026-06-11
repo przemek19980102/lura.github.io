@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'ura Symbol Tracker</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 120px);
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button {
+    font-size: 18px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+#sequence {
+    font-size: 24px;
+    margin: 20px 0;
+    word-break: break-word;
+}
+
+.clear {
+    background: #c62828;
+    color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>L'ura - Death's Dirge Tracker</h1>
+
+<div class="buttons">
+    <button onclick="add('☀️')">☀️ Sun</button>
+    <button onclick="add('🌙')">🌙 Moon</button>
+    <button onclick="add('⭐')">⭐ Star</button>
+    <button onclick="add('💎')">💎 Crystal</button>
+
+    <button onclick="add('🔺')">🔺 Triangle</button>
+    <button onclick="add('🔷')">🔷 Diamond</button>
+    <button onclick="add('⭕')">⭕ Circle</button>
+    <button onclick="add('⬛')">⬛ Square</button>
+</div>
+
+<h2>Kolejność:</h2>
+<div id="sequence">—</div>
+
+<button class="clear" onclick="clearSeq()">Wyczyść</button>
+
+<script>
+let seq = [];
+
+function add(symbol) {
+    seq.push(symbol);
+    render();
+}
+
+function clearSeq() {
+    seq = [];
+    render();
+}
+
+function render() {
+    document.getElementById("sequence").textContent =
+        seq.length ? seq.join(" → ") : "—";
+}
+</script>
+
+</body>
+</html>
