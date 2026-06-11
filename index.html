@@ -50,6 +50,27 @@ button:hover img {
     margin: 20px 0;
     word-break: break-word;
     min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sequence-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sequence-item img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.sequence-separator {
+    color: #888;
 }
 
 .clear {
@@ -72,19 +93,19 @@ button:hover img {
 <h1>L'ura - Death's Dirge Tracker</h1>
 
 <div class="buttons">
-    <button onclick="add('Circle')">
+    <button onclick="add('Circle', 'images/circle.png')">
         <img src="images/circle.png" alt="Circle">
     </button>
-    <button onclick="add('Triangle')">
+    <button onclick="add('Triangle', 'images/triangle.png')">
         <img src="images/triangle.png" alt="Triangle">
     </button>
-    <button onclick="add('Diamond')">
+    <button onclick="add('Diamond', 'images/diamond.png')">
         <img src="images/diamond.png" alt="Diamond">
     </button>
-    <button onclick="add('T')">
+    <button onclick="add('T', 'images/t.png')">
         <img src="images/t.png" alt="T">
     </button>
-    <button onclick="add('X')">
+    <button onclick="add('X', 'images/x.png')">
         <img src="images/x.png" alt="X">
     </button>
 </div>
@@ -97,8 +118,8 @@ button:hover img {
 <script>
 let seq = [];
 
-function add(symbol) {
-    seq.push(symbol);
+function add(symbol, imagePath) {
+    seq.push({ symbol, imagePath });
     render();
 }
 
@@ -108,8 +129,18 @@ function clearSeq() {
 }
 
 function render() {
-    document.getElementById("sequence").textContent =
-        seq.length ? seq.join(" → ") : "—";
+    const seqDiv = document.getElementById("sequence");
+    
+    if (seq.length === 0) {
+        seqDiv.innerHTML = "—";
+        return;
+    }
+    
+    seqDiv.innerHTML = seq.map((item, index) => {
+        const img = `<img src="${item.imagePath}" alt="${item.symbol}">`;
+        const separator = index < seq.length - 1 ? '<span class="sequence-separator">→</span>' : '';
+        return `<div class="sequence-item">${img}${separator}</div>`;
+    }).join('');
 }
 </script>
 
